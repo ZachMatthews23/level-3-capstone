@@ -3,6 +3,7 @@ import axios from 'axios'
 import UserMeme from './UserMeme'
 import MemeForm from './MemeForm'
 
+
 class Meme extends React.Component {
     constructor() {
         super()
@@ -65,7 +66,7 @@ class Meme extends React.Component {
         const createdMemes = this.state.userMemes.map(meme => <UserMeme userMemes={meme}/>)
 
         return(
-            <div>
+            <div >
                 <MemeForm 
                     {...this.state}
                     handleSubmit={this.handleSubmit}
