@@ -8,11 +8,13 @@
 }
 .header{
     grid-area: 1 / 2 / 2 / 3;
-    margin-top: 50px;
+    position:relative;
+    bottom: 10px;
     font-size: 45px;
     text-align: center;
     justify-content: center;
     margin-bottom: 10px;
+    margin-top: 90px;
 }
 
 .meme-form{
@@ -22,6 +24,8 @@
 
 .input{
     grid-area: 2 / 1 / 4 / 2;
+    position: relative;
+    top: 10px;
     padding: 10px;
     margin: 5px;
 }
@@ -39,31 +43,58 @@
     padding: 5px;
     margin: 10px;
     margin-bottom: 10px;
-   
+  
 }
 .meme{
-    grid-area: 2 / 3 / 4 / 3;
+    grid-area: 2 / 2 / 3 / 3;
+    position: relative;
+    top: 20px;
+    bottom: 50px;
     margin: 20px;
+    margin-left: 5px;
     padding: 5px;
+    align-items: center;
+    width: 400px;
+    height: 500px;
+  
 }
 
+
 .image{
-    align-items: center;
+    border: 4px solid black;
     max-width: 400px;
     max-height: 500px;
-    border: 4px solid black;
+   
 }
 .top{
+    color: beige;
+    line-height: 5%;
     grid-area: 1 / 1 / 4 / 3;
+    position: absolute;
+    top:50px;
+    bottom: 50px;
+    left: 50px;
     justify-self: top;
 }
 
 .bottom{
+    color: beige;
+    line-height: 50%;
     grid-area: 2 / 2 / 4 / 3;
+    position: absolute;
+    top:300px;
+    bottom: 20px;
+    left: 50px;
     justify-self: bottom;
 }
 
 
-.footer{
-    grid-area: 4 / 1 / 5 / 4;
+.createdMeme{
+   display: inline-block;
+   padding: 5px;
+}
+
+.deleteBtn{
+    position: relative;
+    top: 20px;
 }
