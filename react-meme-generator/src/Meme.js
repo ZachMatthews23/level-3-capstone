@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import UserMeme from './UserMeme'
 import MemeForm from './MemeForm'
+import Delete from './Delete-Btn'
 
 
 class Meme extends React.Component {
@@ -18,6 +19,7 @@ class Meme extends React.Component {
         this.clickHandler = this.clickHandler.bind(this)
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleDelete = this.handleDelete.bind(this);
     }
 
     componentDidMount(){
@@ -25,12 +27,17 @@ class Meme extends React.Component {
             .then(res => {
                 const {memes} = res.data.data
                 this.setState({
-                    memeArray: memes       
+                    memeArray: memes,     
                 })
                 const randNum = Math.floor(Math.random() * 100)
                 console.log(randNum)
+                const memeId =this.state.memeArray[randNum].id
+                
                 const loadMeme = this.state.memeArray[randNum].url
-                this.setState({randomImg: loadMeme})
+                this.setState({
+                    randomImg: loadMeme,
+                    id: Math.random() * 100
+                })
             })
             .catch(err => console.log(err))
     }
@@ -38,8 +45,9 @@ class Meme extends React.Component {
     clickHandler() {
         const randNum = Math.floor(Math.random() * 100)
         console.log(randNum)
-        const loadMeme = this.state.memeArray[randNum].url
-        this.setState({randomImg: loadMeme})
+        const loadMeme = this.state.memeArray[randNum]
+
+        this.setState({randomImg: loadMeme.url, id: Math.random() * 100})
     }
     
     handleChange(event) {
@@ -53,7 +61,7 @@ class Meme extends React.Component {
             randomImg: this.state.randomImg,
             topText: this.state.topText,
             bottomText: this.state.bottomText,
-            id: this.state.id
+            id: Math.random() * 100
         }
         this.setState(prevState => ({
             topText: "",
@@ -61,10 +69,20 @@ class Meme extends React.Component {
             userMemes: [newObject, ...prevState.userMemes]
         }))
     }
+    
+    handleDelete(item) {
+        this.setState({userMemes: this.state.userMemes.filter(el => el.id !==item.id ) })
+    }
 
+    editText(){
+
+    }
+
+    changeColor(){
+        //change styles of top and bottom text color: black or white
+    }
     render() {
-        const createdMemes = this.state.userMemes.map(meme => <UserMeme userMemes={meme}/>)
-
+            const createdMemes = this.state.userMemes.map(meme => <UserMeme userMemes={meme} key={meme.id} handleDelete= {this.handleDelete}  />)
         return(
             <div >
                 <MemeForm 
@@ -72,6 +90,7 @@ class Meme extends React.Component {
                     handleSubmit={this.handleSubmit}
                     handleChange={this.handleChange}
                     clickHandler={this.clickHandler}
+                  
                 />
                 <div>
                     {createdMemes}
