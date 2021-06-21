@@ -22,8 +22,9 @@ class Meme extends React.Component {
         this.clickHandler = this.clickHandler.bind(this)
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
-        this.handleDelete = this.handleDelete.bind(this);
-        this.takeToEdit =this.takeToEdit.bind(this);
+        this.handleDelete = this.handleDelete.bind(this)
+        this.takeToEdit = this.takeToEdit.bind(this)
+        this.submitEdits = this.submitEdits.bind(this);
 
       
     }
@@ -84,7 +85,7 @@ class Meme extends React.Component {
     takeToEdit(id){
         console.log("newId"+ id)
         console.log("state (userMems)" + this.state.userMemes)
-        let selectedMeme = this.state.userMemes.find(meme =>{ meme.id === id})
+        let selectedMeme = this.state.userMemes.find(meme => meme.id === id)
         selectedMeme.isEditing = true
 
         let newUserMemes = this.state.userMemes.map(meme =>{
@@ -101,6 +102,26 @@ class Meme extends React.Component {
             {userMemes: newUserMemes}
         )
     }
+
+    submitEdits(e, id) {
+        e.preventDefault()
+        let selectedMeme = this.state.userMemes.find(meme => meme.id === id)
+        selectedMeme.topText = this.state.topCreatedText
+        selectedMeme.bottomText = this.state.bottomCreatedText
+        selectedMeme.isEditing = false
+        let newUserMemes = this.state.userMemes.map(meme =>{
+            if(meme.id === selectedMeme.id){
+                console.log("Selected Meme Top Text " + selectedMeme.topText)
+                return selectedMeme
+            }
+            else{
+                return meme
+            }
+        })
+        this.setState({userMemes: newUserMemes})
+
+
+    }
     
     // changeColor(){
     //     //change styles of top and bottom text color: black or white
@@ -114,7 +135,7 @@ class Meme extends React.Component {
     render() {
         
             const createdMemes = this.state.userMemes.map(meme => 
-            <UserMeme userMemes={meme} key={meme.id} handleDelete= {this.handleDelete} takeToEdit={this.takeToEdit} />)
+            <UserMeme userMemes={meme} key={meme.id} topCreatedText={this.state.topCreatedText} bottomCreatedText={this.state.bottomCreatedText}handleDelete= {this.handleDelete} takeToEdit={this.takeToEdit} submitEdits={this.submitEdits} handleChange={this.handleChange} />)
         return(
             <div >
                 <MemeForm 
