@@ -1,6 +1,7 @@
 import React from 'react'
 
 function MemeForm(props) {
+    
     return(
         <div className="parent">
             <header className="header">Meme Generator</header>
