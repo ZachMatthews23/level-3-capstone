@@ -15,6 +15,7 @@ class Meme extends React.Component {
             bottomText: "",
             topCreatedText: "",
             bottomCreatedText: "",
+            textColor: "black",
             id: "",
             userMemes: []
 
@@ -24,7 +25,9 @@ class Meme extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handleDelete = this.handleDelete.bind(this)
         this.takeToEdit = this.takeToEdit.bind(this)
-        this.submitEdits = this.submitEdits.bind(this);
+        this.submitEdits = this.submitEdits.bind(this)
+        this.changeColor =this.changeColor.bind(this)
+
 
       
     }
@@ -123,15 +126,15 @@ class Meme extends React.Component {
 
     }
     
-    // changeColor(){
-    //     //change styles of top and bottom text color: black or white
-    //     if (textColor.style.color === "black"){
-    //         //if text color === "black" then change/set === "white"
-    //     }
-    //     else{
-    //         //change/ set === "black"
-    //     }
-    // }
+    changeColor(){
+        //change styles of top and bottom text color: black or white
+        if (this.state.textColor === "black"){
+            this.setState({textColor: "white"})
+        }
+        else{
+            this.setState({textColor: "black"})
+        }
+    }
     render() {
         
             const createdMemes = this.state.userMemes.map(meme => 
@@ -143,6 +146,7 @@ class Meme extends React.Component {
                     handleSubmit={this.handleSubmit}
                     handleChange={this.handleChange}
                     clickHandler={this.clickHandler}
+                    changeColor ={this.changeColor}
                   
                 />
                 <div>
