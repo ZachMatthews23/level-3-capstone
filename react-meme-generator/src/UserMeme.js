@@ -6,16 +6,20 @@ function UserMeme(props) {
     return(
         props.userMemes.isEditing === false?
         <div className="createdMeme">
-            <button className="editBtn" onClick={() => props.takeToEdit(props.userMemes.id)}>Edit Text</button>
-            <button className="deleteBtn" onClick={() => props.handleDelete(props.userMemes)}>Delete</button>
-            <img className="image" src={props.userMemes.randomImg} alt=""/>
-            <h2 className="topCreated"  style={{color: props.textColor}}>{props.userMemes.topText}</h2>
-            <h2 className="bottomCreated" style={{color: props.textColor}}>{props.userMemes.bottomText}</h2>
-          
+            <div>
+                <img className="image" src={props.userMemes.randomImg} alt=""/>
+            </div>
+            <div className="buttons">
+                <button className="editBtn" onClick={() => props.takeToEdit(props.userMemes.id)}>Edit Text</button>
+                <button className="deleteBtn" onClick={() => props.handleDelete(props.userMemes)}>Delete</button>
+            </div>
+            {/* <h2 className="topCreated">{props.userMemes.topText}</h2>
+            <h2 className="bottomCreated">{props.userMemes.bottomText}</h2> */}
+            
         </div>
         :
     
-        <form name="meme-inputs" className="meme-form" onSubmit={(e) => props.submitEdits(e, props.userMemes.id)}>
+        <form name="meme-inputs" className="user-meme-form" onSubmit={(e) => props.submitEdits(e, props.userMemes.id)}>
             <input
                 className="input"
                 type="text"
