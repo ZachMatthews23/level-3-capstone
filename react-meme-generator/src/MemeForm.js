@@ -24,12 +24,12 @@ function MemeForm(props) {
                 />
                 <button className="button">Generate Meme</button>
             </form>
-            <button onClick={props.changeColor}>Change Text Color</button>
+            <button className="colorBtn" onClick={props.changeColor}>Change Text Color</button>
             <button className="refreshBtn" onClick={props.clickHandler}>Refresh Image</button>
             <div className="meme">
                     <img className="image" src={props.randomImg} alt=""/>
-                    <h2 className="top">{props.topText}</h2>
-                    <h2 className="bottom">{props.bottomText}</h2>
+                    <h2 className="top" style={{color: props.textColor}}>{props.topText}</h2>
+                    <h2 className="bottom" style={{color: props.textColor}}>{props.bottomText}</h2>
             </div>
         </div>
     )
