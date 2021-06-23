@@ -19,6 +19,7 @@ class Meme extends React.Component {
             bottomText: "",
             topCreatedText: "",
             bottomCreatedText: "",
+            textColor: "black",
             id: "",
             key: "",
             userMemes: []
@@ -156,7 +157,6 @@ class Meme extends React.Component {
             .catch(err => console.log(err))
     }
     
-
     render() {
             const createdMemes = this.state.userMemes.map(meme => 
                 <UserMeme 

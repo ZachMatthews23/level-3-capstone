@@ -1,4 +1,4 @@
-/* .parent{
+.parent{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 0.5fr repeat(4, 1fr);
@@ -14,7 +14,7 @@
     text-align: center;
     justify-content: center;
     margin-bottom: 10px;
-    margin-top: 90px;
+    margin-top: 80px;
 }
 
 .meme-form{
@@ -25,7 +25,7 @@
 .input{
     grid-area: 2 / 1 / 4 / 2;
     position: relative;
-    top: 10px;
+    top: 0px;
     padding: 10px;
     margin: 5px;
 }
@@ -34,15 +34,17 @@
     padding: 5px;
     margin: 5px;
     margin-bottom: 10px;
+    margin-top: 10px;
    
 }
 .refreshBtn{
     grid-area: 2 / 2 / 4 / 3;
     height: 30px;
-    width: 125px;
+    width: 150px;
     padding: 5px;
     margin: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    margin-top: 5px;
   
 }
 .meme{
@@ -64,11 +66,12 @@
     border: 4px solid black;
     max-width: 400px;
     max-height: 500px;
-   
+   align-items: center;
 }
 .top{
     color: beige;
-    line-height: 5%;
+    font-size: 30px;
+    letter-spacing: 2px;
     grid-area: 1 / 1 / 4 / 3;
     position: absolute;
     top:50px;
@@ -79,7 +82,8 @@
 
 .bottom{
     color: beige;
-    line-height: 50%;
+    font-size:  30px;
+    letter-spacing: 2px;
     grid-area: 2 / 2 / 4 / 3;
     position: absolute;
     top:300px;
@@ -92,81 +96,33 @@
 .createdMeme{
    display: inline-block;
    padding: 5px;
+   margin-top: 10px;
 }
+
 
 .deleteBtn{
     position: relative;
     top: 20px;
-} */
-
-body{
-    background-color: whitesmoke;
+    left: 100px;
+    height: 20px;
+    width: 100px;
 }
-
-.parent{
-    background-color: white;
-    margin: auto;
-    width: 60%;
-    align-items: center;
-    border: 1px solid #efefef;
-    border-radius: 3px;
-    box-shadow:
-    
-        0 1px 1px rgba(0,0,0,0.15),
-            
-        0 10px 0 -5px #eee,
-            
-        0 10px 1px -4px rgba(0,0,0,0.15),
-            
-        0 20px 0 -10px #eee,
-           
-        0 20px 1px -9px rgba(0,0,0,0.15);
-    padding: 30px;
-}
-
-.image{
-    border: 4px solid black;
-    max-width: 400px;
-    max-height: 500px;
-    margin: 10px;
-}
-
-.header{
-    position:relative;
-    bottom: 10px;
-    font-size: 45px;
-    text-align: center;
-    justify-content: center;
-    margin-bottom: 25px;
-    margin-top: 25px;
-}
-.meme-form{
-    display: flex;
-    justify-content: center;
-    margin: 10px;
-}
-
-.createdMeme{
-    background-color: white;
-    margin: auto;
-    width: 60%;
-    align-items: center;
-    text-align: center;
-    border: 1px solid #efefef;
-    border-radius: 3px;
-    padding: 30px;
-}
-
-.form{
-    align-items: center;
-    text-align: center;
-    margin: 10px;
-}
-
 .editBtn{
-    margin: 5px;
+    position: relative;
+    top: 20px;
+    left: 350px;
+    height: 20px;
+    width: 100px;
 }
 
-.deleteBtn{
-    margin: 5px;
+.colorBtn{
+    height: 30px;
+    width: 150px;
+    position: relative;
+    top: 280px;
+    left: 700px;
+    padding: 5px;
+    margin: 10px;
+    margin-bottom: 15px;
+    margin-top: 5px;
 }
