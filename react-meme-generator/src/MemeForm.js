@@ -24,7 +24,6 @@ function MemeForm(props) {
                 />
                 <button className="button">Generate Meme</button>
             </form>
-            <button onClick={props.changeColor}>Change Text Color</button>
             <button className="refreshBtn" onClick={props.clickHandler}>Refresh Image</button>
             <div className="meme">
                     <img className="image" src={props.randomImg} alt=""/>

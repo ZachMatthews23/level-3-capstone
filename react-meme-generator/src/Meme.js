@@ -3,6 +3,10 @@ import axios from 'axios'
 import UserMeme from './UserMeme'
 import MemeForm from './MemeForm'
 
+const objectToQueryParam = (obj) => {
+    const params = Object.entries(obj).map(([key, value]) => `${key}=${value}`)
+    return '?' + params.join('&')
+}
 
 class Meme extends React.Component {
     constructor() {
@@ -16,6 +20,7 @@ class Meme extends React.Component {
             topCreatedText: "",
             bottomCreatedText: "",
             id: "",
+            key: "",
             userMemes: []
 
         }
@@ -24,9 +29,7 @@ class Meme extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handleDelete = this.handleDelete.bind(this)
         this.takeToEdit = this.takeToEdit.bind(this)
-        this.submitEdits = this.submitEdits.bind(this);
-
-      
+        this.submitEdits = this.submitEdits.bind(this)
     }
 
     componentDidMount(){
@@ -35,16 +38,15 @@ class Meme extends React.Component {
                 const {memes} = res.data.data
                 this.setState({
                     memeArray: memes 
-
                 })
                 const randNum = Math.floor(Math.random() * 100)
-                const memeId =this.state.memeArray[randNum].id
-                
-                const loadMeme = this.state.memeArray[randNum].url
+                const loadMeme = this.state.memeArray[randNum]
                 this.setState({
-                    randomImg: loadMeme,
-                    id: Math.random() * 100
+                    randomImg: loadMeme.url,
+                    id: loadMeme.id,
+                    key: Math.random()
                 })
+                console.log(loadMeme.id)
             })
             .catch(err => console.log(err))
     }
@@ -52,8 +54,8 @@ class Meme extends React.Component {
     clickHandler() {
         const randNum = Math.floor(Math.random() * 100)
         const loadMeme = this.state.memeArray[randNum]
-
-        this.setState({randomImg: loadMeme.url, id: Math.random() * 100})
+        this.setState({randomImg: loadMeme.url, id: loadMeme.id})
+        console.log(loadMeme.id)
     }
     
     handleChange(event) {
@@ -63,34 +65,48 @@ class Meme extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault()
-        const newObject = {
-            randomImg: this.state.randomImg,
-            topText: this.state.topText,
-            bottomText: this.state.bottomText,
-            id: Math.random() * 100,
-            isEditing: false
+
+        const params = {
+            template_id: this.state.id,
+            text0: this.state.topText,
+            text1: this.state.bottomText,
+            username: 'ZKktc1234',
+            password: 'KTCktc1234'
         }
-        this.setState(prevState => ({
-            topText: "",
-            bottomText: "",
-            userMemes: [newObject, ...prevState.userMemes]
-        }))
+
+        axios.get(`https://api.imgflip.com/caption_image${objectToQueryParam(params)}`)
+            .then(res => {
+                console.log(res)
+                const newObject = {
+                    randomImg: res.data.data.url,
+                    topText: this.state.topText,
+                    bottomText: this.state.bottomText,
+                    id: this.state.id,
+                    key: Math.random(),
+                    isEditing: false
+                }
+
+                this.setState(prevState => ({
+                    topText: "",
+                    bottomText: "",
+                    userMemes: [newObject, ...prevState.userMemes]
+                })   
+            )})
+            .catch(err => console.log(err))
     }
     
     handleDelete(item) {
-        this.setState({userMemes: this.state.userMemes.filter(el => el.id !==item.id ) })
+        this.setState({userMemes: this.state.userMemes.filter(el => el.key !== item.key ) })
     }
 
 
     takeToEdit(id){
-        console.log("newId"+ id)
-        console.log("state (userMems)" + this.state.userMemes)
+        console.log("This is the edit ID " + id)
         let selectedMeme = this.state.userMemes.find(meme => meme.id === id)
         selectedMeme.isEditing = true
 
         let newUserMemes = this.state.userMemes.map(meme =>{
             if(meme.id === selectedMeme.id){
-                console.log("Selected Meme Top Text " + selectedMeme.topText)
                 return selectedMeme
             }
             else{
@@ -105,49 +121,64 @@ class Meme extends React.Component {
 
     submitEdits(e, id) {
         e.preventDefault()
+        console.log("this is the slected meme ID " + id)
         let selectedMeme = this.state.userMemes.find(meme => meme.id === id)
         selectedMeme.topText = this.state.topCreatedText
         selectedMeme.bottomText = this.state.bottomCreatedText
         selectedMeme.isEditing = false
-        let newUserMemes = this.state.userMemes.map(meme =>{
-            if(meme.id === selectedMeme.id){
-                console.log("Selected Meme Top Text " + selectedMeme.topText)
-                return selectedMeme
-            }
-            else{
-                return meme
-            }
-        })
-        this.setState({userMemes: newUserMemes})
 
+        const editParams = {
+            template_id: selectedMeme.id,
+            text0: this.state.topCreatedText,
+            text1: this.state.bottomCreatedText,
+            username: 'ZKktc1234',
+            password: 'KTCktc1234'
+        }
 
+        axios.get(`https://api.imgflip.com/caption_image${objectToQueryParam(editParams)}`)
+            .then(res => {
+                console.log(res)
+                const editObject = {
+                    randomImg: res.data.data.url,
+                    topText: this.state.topCreatedText,
+                    bottomText: this.state.bottomCreatedText,
+                    id: this.state.id,
+                    key: Math.random(),
+                    isEditing: false
+                }
+
+                this.setState(prevState => ({
+                    topText: "",
+                    bottomText: "",
+                    userMemes: [editObject, ...prevState.userMemes]
+                })    
+            )})
+            .catch(err => console.log(err))
     }
     
-    // changeColor(){
-    //     //change styles of top and bottom text color: black or white
-    //     if (textColor.style.color === "black"){
-    //         //if text color === "black" then change/set === "white"
-    //     }
-    //     else{
-    //         //change/ set === "black"
-    //     }
-    // }
+
     render() {
-        
             const createdMemes = this.state.userMemes.map(meme => 
-            <UserMeme userMemes={meme} key={meme.id} topCreatedText={this.state.topCreatedText} bottomCreatedText={this.state.bottomCreatedText}handleDelete= {this.handleDelete} takeToEdit={this.takeToEdit} submitEdits={this.submitEdits} handleChange={this.handleChange} />)
+                <UserMeme 
+                    userMemes={meme} 
+                    key={meme.key} 
+                    topCreatedText={this.state.topCreatedText} 
+                    bottomCreatedText={this.state.bottomCreatedText}
+                    handleDelete= {this.handleDelete} 
+                    takeToEdit={this.takeToEdit} 
+                    submitEdits={this.submitEdits} 
+                    handleChange={this.handleChange} 
+                />)
         return(
-            <div >
+            <div className="form">
                 <MemeForm 
                     {...this.state}
                     handleSubmit={this.handleSubmit}
                     handleChange={this.handleChange}
                     clickHandler={this.clickHandler}
-                  
                 />
-                <div>
+                <br />
                     {createdMemes}
-                </div>
             </div>
         )
     }
